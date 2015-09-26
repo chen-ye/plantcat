@@ -23,25 +23,37 @@ int lightMin = 850; // Sunny: 900s, sunny shadows: 840
 
 void setup() {
  Serial.begin(9600);
- avgLight = 700;
+}
+
+void checkMeow() {
+ if(avgLight < lightMin {
+  if(lightLevel < lightMin) {
+   meow();
+  }
+ }
 }
 
 void meow() {
- Serial.println(meow);
+ Serial.println("meow");
+}
+
+int readPhotoR() {
+ //auto-adjust the minimum and maximum limits in real time
+ return analogRead(photoRPin);
+ //Send the adjusted Light level result to Serial port (processing)
+ Serial.println(lightLevel);
+}
+
+void updateAvg() {
+  avgLight = 700;
 }
 
 void loop(){
- //auto-adjust the minimum and maximum limits in real time
- lightLevel=analogRead(photoRPin);
- 
- //Send the adjusted Light level result to Serial port (processing)
- Serial.println(lightLevel);
+ lightLevel=readPhotoR();
+ updateAvg(); 
 
- if(avgLight < lightMin {
-   if(lightLevel < lightMin) {
-    meow();
-   }
- }
+ checkMeow();
+ 
  //slow down the transmission for effective Serial communication.
  delay(50);
 }
