@@ -1,15 +1,12 @@
 // pasted from https://learn.adafruit.com/adafruit-wave-shield-audio-shield-for-arduino/wavehc-library
 
-#include <ArduinoPins.h>
-#include <FatReader.h>
-#include <FatStructs.h>
-#include <mcpDac.h>
-#include <SdInfo.h>
-#include <SdReader.h>
 #include <WaveHC.h>
-#include <Wavemainpage.h>
-#include <WavePinDefs.h>
 #include <WaveUtil.h>
+// #include <SdReader.h>
+
+void sdErrorCheck() {
+  
+}
 
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
@@ -27,7 +24,7 @@ void setup() {
   putstring_nl("\nWave test!");  // say we woke up!
   
   putstring("Free RAM: ");       // This can help with debugging, running out of RAM is bad
-  Serial.println(freeRam());  
+  // Serial.println(freeRam());  
  
   // Set the output pins for the DAC control. This pins are defined in the library
   pinMode(2, OUTPUT);
@@ -111,22 +108,6 @@ void lsR(FatReader &d)
 }
 
 /*
- * print dir_t name field. The output is 8.3 format, so like SOUND.WAV or FILENAME.DAT
- */
-void printEntryName(dir_t &dir)
-{
-  for (uint8_t i = 0; i < 11; i++) {     // 8.3 format has 8+3 = 11 letters in it
-    if (dir.name[i] == ' ')
-        continue;         // dont print any spaces in the name
-    if (i == 8) 
-        Serial.print('.');           // after the 8th letter, place a dot
-    Serial.print(dir.name[i]);      // print the n'th digit
-  }
-  if (DIR_IS_SUBDIR(dir)) 
-    Serial.print('/');       // directories get a / at the end
-}
-
-/*
  * play recursively - possible stack overflow if subdirectories too nested
  */
 void play(FatReader &dir)
@@ -174,3 +155,4 @@ void play(FatReader &dir)
     }
   }
 }
+
